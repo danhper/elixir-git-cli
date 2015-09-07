@@ -1,4 +1,4 @@
-# Elixir Git CLI
+# Elixir Git CLI [![Build Status](https://travis-ci.org/tuvistavie/elixir-git-cli.svg?branch=master)](https://travis-ci.org/tuvistavie/elixir-git-cli)
 
 Simple wrapper of git CLI for Elixir.
 
