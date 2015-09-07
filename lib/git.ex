@@ -31,14 +31,15 @@ defmodule Git do
   end
 
   @doc """
-  Run git init in the given directory
+  Run `git init` in the given directory
   Returns `{:ok, repository}` on success and `{:error, reason}` on failure.
   """
   @spec init!(cli_arg) :: {:ok, Git.Repository.t} | error
   def init!(args \\ []), do: result_or_fail(init(args))
 
   commands = File.read!(Path.join(__DIR__, "../git-commands.txt")) |> String.split("\n") |> Enum.filter fn x ->
-    not String.starts_with?(x, "#")
+    x = String.strip(x)
+    not (String.length(x) == 0 or String.starts_with?(x, "#"))
   end
 
   Enum.each commands, fn name ->
@@ -46,7 +47,7 @@ defmodule Git do
     bang_name = String.to_atom("#{normalized_name}!")
 
     @doc """
-    Run #{name} in the given repository
+    Run `git #{name}` in the given repository
     Returns `{:ok, output}` on success and `{:error, reason}` on failure.
     """
     @spec unquote(normalized_name)(Git.Repository.t, cli_arg) :: {:ok, binary} | error
@@ -55,7 +56,7 @@ defmodule Git do
     end
 
     @doc """
-    Same as #{normalized_name} but raises an exception on error.
+    Same as `#{normalized_name}/2` but raises an exception on error.
     """
     @spec unquote(bang_name)(Git.Repository.t, cli_arg) :: binary
     def unquote(bang_name)(repository, args \\ []) do
