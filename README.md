@@ -29,7 +29,7 @@ Git.remote repo, ~w(add upstream https://git.example.com)
 Git.pull repo, ~w(--rebase upstream master)
 Git.diff repo, "HEAD~1"
 Git.add repo, "."
-Git.commit repo, ~w(-m my message)
+Git.commit repo, ["-m" "my message"]
 Git.push repo
 IO.puts Git.log!(repo)
 ```
