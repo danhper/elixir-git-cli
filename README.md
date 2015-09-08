@@ -24,7 +24,7 @@ The only exceptions are `Git.clone` and `Git.init`, which do not take a reposito
 Here are a few examples.
 
 ```elixir
-repo = Git.clone "https://github.com/tuvistavie/elixir-git-cli"
+{:ok, repo} = Git.clone "https://github.com/tuvistavie/elixir-git-cli"
 Git.remote repo, ~w(add upstream https://git.example.com)
 Git.pull repo, ~w(--rebase upstream master)
 Git.diff repo, "HEAD~1"
