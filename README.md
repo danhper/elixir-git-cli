@@ -8,7 +8,7 @@ Add the dependency to your `mix.exs` deps:
 
 ```
   defp deps do
-    [{:git_cli, "~> 0.1.0"}]
+    [{:git_cli, "~> 0.2"}]
   end
 ```
 
