@@ -37,10 +37,12 @@ defmodule Git do
   @spec init!(cli_arg) :: {:ok, Git.Repository.t} | error
   def init!(args \\ []), do: result_or_fail(init(args))
 
-  commands = File.read!(Path.join(__DIR__, "../git-commands.txt")) |> String.split("\n") |> Enum.filter fn x ->
+  commands = File.read!(Path.join(__DIR__, "../git-commands.txt"))
+  |> String.split("\n")
+  |> Enum.filter(fn x ->
     x = String.strip(x)
     not (String.length(x) == 0 or String.starts_with?(x, "#"))
-  end
+  end)
 
   Enum.each commands, fn name ->
     normalized_name = String.to_atom(String.replace(name, "-", "_"))

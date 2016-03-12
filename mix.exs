@@ -3,7 +3,7 @@ defmodule Git.Mixfile do
 
   def project do
     [app: :git_cli,
-     version: "0.1.0",
+     version: "0.2.0",
      elixir: "~> 1.0",
      name: "git_cli",
      source_url: "https://github.com/tuvistavie/elixir-git-cli",
@@ -20,9 +20,9 @@ defmodule Git.Mixfile do
   end
 
   defp deps do
-    [{:earmark, "~> 0.1", only: :dev},
-     {:ex_doc, "~> 0.7", only: :dev},
-     {:temp, "~> 0.1", only: :test}]
+    [{:earmark, "~> 0.2", only: :dev},
+     {:ex_doc, "~> 0.11", only: :dev},
+     {:temp, "~> 0.3", only: :test}]
   end
 
   defp description do
