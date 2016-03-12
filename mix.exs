@@ -32,7 +32,7 @@ defmodule Git.Mixfile do
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE", "git-commands.txt"],
-      contributors: ["Daniel Perez"],
+      maintainers: ["Daniel Perez"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/tuvistavie/elixir-git-cli"}
     ]
