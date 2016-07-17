@@ -69,15 +69,21 @@ defmodule Git do
   @doc """
   Execute the git command in the given repository.
   """
-  @spec execute_command(Repository.t, bitstring, list, (bitstring -> any)) :: :ok | {:error, any}
-  def execute_command(repo, command, args, callback) do
-    unless is_list(args), do: args = [args]
-    options = [stderr_to_stdout: true]
-    if repo, do: options = Dict.put(options, :cd, repo.path)
+  @spec execute_command(Repository.t | nil, bitstring, list, (bitstring -> any | error)) :: {:ok, any} | {:error, any}
+  def execute_command(repo, command, args, callback) when is_list(args) do
+    options = case repo do
+      nil -> [stderr_to_stdout: true]
+      _ ->   [stderr_to_stdout: true, cd: repo.path]
+    end
+
     case System.cmd "git", [command|args], options do
       {output, 0} -> callback.(output)
       {err, code} -> {:error, %Git.Error{message: err, command: command, args: args, code: code}}
     end
+  end
+
+  def execute_command(repo, command, args, callback) do
+    execute_command(repo, command, [args], callback)
   end
 
   defp result_or_fail(result) do

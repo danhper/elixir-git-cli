@@ -22,7 +22,7 @@ defmodule Git.Mixfile do
   defp deps do
     [{:earmark, "~> 0.2", only: :dev},
      {:ex_doc, "~> 0.11", only: :dev},
-     {:temp, "~> 0.3", only: :test}]
+     {:temp, "~> 0.4", only: :test}]
   end
 
   defp description do
