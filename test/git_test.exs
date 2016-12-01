@@ -22,6 +22,15 @@ defmodule GitTest do
     Temp.cleanup
   end
 
+  # Verify :new allows use of a pre-existing repo
+  test :new, %{dir: dir} do
+    Git.init! dir
+
+    repo = Git.new dir
+    assert File.exists?(repo.path)
+    assert File.exists?(Path.join(repo.path, ".git"))
+  end
+
   test :add, %{dir: dir} do
     repo = Git.init! dir
     assert String.length(Git.status! repo, ~w(-s)) == 0

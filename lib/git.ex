@@ -67,6 +67,17 @@ defmodule Git do
   end
 
   @doc """
+  Return a Git.Repository struct with the specified or defaulted path.
+  For use with an existing repo (when Git.init and Git.clone would not be appropriate).
+  """
+  @spec new(cli_arg) :: Git.Repository.t
+  def new(args \\ []) do
+    args = if is_list(args), do: args, else: [args]
+    path = (Enum.at(args, 0) || ".") |> Path.expand
+    %Git.Repository{path: path}
+  end
+
+  @doc """
   Execute the git command in the given repository.
   """
   @spec execute_command(Repository.t | nil, bitstring, list, (bitstring -> any | error)) :: {:ok, any} | {:error, any}

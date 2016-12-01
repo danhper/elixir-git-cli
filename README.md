@@ -19,16 +19,26 @@ The usage is basically `Git.COMMAND REPO, ARGS`, where `REPO` is a
 So for example, `git pull --rebase origin master` would translate to
 `Git.pull repo, ~w(--rebase origin master)`.
 
-The only exceptions are `Git.clone` and `Git.init`, which do not take a repository as first argument.
+The only exceptions are `Git.clone`, `Git.init`, and `Git.new`, which do not take a repository as first argument.
 
 Here are a few examples.
 
+### Git.clone Example
 ```elixir
 {:ok, repo} = Git.clone "https://github.com/tuvistavie/elixir-git-cli"
 Git.remote repo, ~w(add upstream https://git.example.com)
 Git.pull repo, ~w(--rebase upstream master)
 Git.diff repo, "HEAD~1"
 Git.add repo, "."
+Git.commit repo, ["-m" "my message"]
+Git.push repo
+IO.puts Git.log!(repo)
+```
+
+### Git.new Example
+```elixir
+repo = Git.new "/path/to/existing/repo"
+IO.puts Git.status! repo
 Git.commit repo, ["-m" "my message"]
 Git.push repo
 IO.puts Git.log!(repo)
@@ -44,7 +54,7 @@ simply raises the exception.
 As this is a wrapper for `git`, you need to have the `git` command available on your path.
 
 The commands are generated from [git-commands.txt](./git-commands.txt),
-except for `init` and `clone` which return a `Git.Repository` struct and not
+except for `init`, `clone`, and `new` which return a `Git.Repository` struct and not
 the git process `stdout`.
 The `apply` command is not generated as it conflicts with elixir Kernel function.
 The commands with dashes have their function equivalent with dashes replaced by underscores, so for example, `git ls-files` become `Git.ls_files`.
