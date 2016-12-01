@@ -29,6 +29,7 @@ defmodule GitTest do
     repo = Git.new dir
     assert File.exists?(repo.path)
     assert File.exists?(Path.join(repo.path, ".git"))
+    Temp.cleanup
   end
 
   test :add, %{dir: dir} do
