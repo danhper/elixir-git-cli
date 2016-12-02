@@ -1,6 +1,7 @@
 defmodule Git do
   @type error :: {:error, Git.Error}
   @type cli_arg :: bitstring | list
+  @type path :: bitstring
 
   @doc """
   Clones the repository. The first argument can be `url` or `[url, path]`.
@@ -70,12 +71,8 @@ defmodule Git do
   Return a Git.Repository struct with the specified or defaulted path.
   For use with an existing repo (when Git.init and Git.clone would not be appropriate).
   """
-  @spec new(cli_arg) :: Git.Repository.t
-  def new(args \\ []) do
-    args = if is_list(args), do: args, else: [args]
-    path = (Enum.at(args, 0) || ".") |> Path.expand
-    %Git.Repository{path: path}
-  end
+  @spec new(path) :: Git.Repository.t
+  def new(path \\ "."), do: %Git.Repository{path: path}
 
   @doc """
   Execute the git command in the given repository.
