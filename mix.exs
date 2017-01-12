@@ -8,11 +8,11 @@ defmodule Git.Mixfile do
      name: "git_cli",
      source_url: "https://github.com/tuvistavie/elixir-git-cli",
      homepage_url: "https://github.com/tuvistavie/elixir-git-cli",
-     package: package,
-     description: description,
+     package: package(),
+     description: description(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps()]
   end
 
   def application do
