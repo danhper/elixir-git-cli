@@ -1,7 +1,7 @@
 defmodule Git do
   @type error :: {:error, Git.Error}
-  @type cli_arg :: bitstring | list
-  @type path :: bitstring
+  @type cli_arg :: String.t | [String.t]
+  @type path :: String.t
 
   @doc """
   Clones the repository. The first argument can be `url` or `[url, path]`.
