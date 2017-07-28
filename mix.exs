@@ -12,6 +12,7 @@ defmodule Git.Mixfile do
      description: description(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     dialyzer: [ flags: [:unmatched_returns, :error_handling, :underspecs]],
      deps: deps()]
   end
 
@@ -22,6 +23,7 @@ defmodule Git.Mixfile do
   defp deps do
     [{:earmark, "~> 0.2", only: :dev},
      {:ex_doc, "~> 0.11", only: :dev},
+     {:dialyxir, "~> 0.5", only: [:dev, :test]},
      {:temp, "~> 0.4", only: :test}]
   end
 
