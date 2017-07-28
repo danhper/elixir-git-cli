@@ -94,10 +94,8 @@ defmodule Git do
     execute_command(repo, command, [args], callback)
   end
 
-  defp result_or_fail(result) do
-    case result do
-      {:ok, res} -> res
-      {:error, err} -> raise err
-    end
-  end
+  @spec result_or_fail({:ok, t}) :: t  when t: Git.Repository.t | String.t
+  defp result_or_fail({:ok, res}), do: res
+  defp result_or_fail({:error, res}), do: raise res
+  
 end
