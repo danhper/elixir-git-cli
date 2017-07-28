@@ -7,7 +7,7 @@ defmodule Git do
   Clones the repository. The first argument can be `url` or `[url, path]`.
   Returns `{:ok, repository}` on success and `{:error, reason}` on failure.
   """
-  @spec clone(cli_arg) :: {:ok, Git.Repository.t} | error
+  @spec clone(cli_arg) ::  {:ok, Git.Repository.t} | error
   def clone(args) do
     execute_command nil, "clone", args, fn _ ->
       args = if is_list(args), do: args, else: [args]
@@ -19,10 +19,11 @@ defmodule Git do
   @doc """
   Same as clone/1 but raise an exception on failure.
   """
-  @spec clone!(cli_arg) :: {:ok, Git.Repository.t} | error
+  @spec clone!(cli_arg) :: Git.Repository.t
   def clone!(args), do: result_or_fail(clone(args))
 
   @spec init(cli_arg) :: {:ok, Git.Repository.t} | error
+  @spec init() :: {:ok, Git.Repository.t} | error
   def init(args \\ []) do
     execute_command nil, "init", args, fn _ ->
       args = if is_list(args), do: args, else: [args]
@@ -35,7 +36,8 @@ defmodule Git do
   Run `git init` in the given directory
   Returns `{:ok, repository}` on success and `{:error, reason}` on failure.
   """
-  @spec init!(cli_arg) :: {:ok, Git.Repository.t} | error
+  @spec init!(cli_arg) :: Git.Repository.t
+  @spec init!() :: Git.Repository.t
   def init!(args \\ []), do: result_or_fail(init(args))
 
   commands = File.read!(Path.join(__DIR__, "../git-commands.txt"))
@@ -61,7 +63,7 @@ defmodule Git do
     @doc """
     Same as `#{normalized_name}/2` but raises an exception on error.
     """
-    @spec unquote(bang_name)(Git.Repository.t, cli_arg) :: binary
+    @spec unquote(bang_name)(Git.Repository.t, cli_arg) :: binary | no_return
     def unquote(bang_name)(repository, args \\ []) do
       result_or_fail(unquote(normalized_name)(repository, args))
     end
@@ -77,7 +79,7 @@ defmodule Git do
   @doc """
   Execute the git command in the given repository.
   """
-  @spec execute_command(Repository.t | nil, bitstring, list, (bitstring -> any | error)) :: {:ok, any} | {:error, any}
+  @spec execute_command(Git.Repository.t | nil, String.t, cli_arg, (String.t -> {:ok, any} | error)) :: {:ok, any} | {:error, any}
   def execute_command(repo, command, args, callback) when is_list(args) do
     options = case repo do
       nil -> [stderr_to_stdout: true]
@@ -97,5 +99,5 @@ defmodule Git do
   @spec result_or_fail({:ok, t}) :: t  when t: Git.Repository.t | String.t
   defp result_or_fail({:ok, res}), do: res
   defp result_or_fail({:error, res}), do: raise res
-  
+
 end
