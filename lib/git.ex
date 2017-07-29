@@ -43,7 +43,8 @@ defmodule Git do
   commands = File.read!(Path.join(__DIR__, "../git-commands.txt"))
   |> String.split("\n")
   |> Enum.filter(fn x ->
-    x = String.strip(x)
+    trim = if function_exported?(String, :trim, 1), do: :trim, else: :strip
+    x = apply(String, trim, [x])
     not (String.length(x) == 0 or String.starts_with?(x, "#"))
   end)
 
@@ -99,5 +100,4 @@ defmodule Git do
   @spec result_or_fail({:ok, t}) :: t  when t: Git.Repository.t | String.t
   defp result_or_fail({:ok, res}), do: res
   defp result_or_fail({:error, res}), do: raise res
-
 end
