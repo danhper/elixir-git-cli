@@ -3,6 +3,16 @@ defmodule Git do
   @type cli_arg :: String.t | [String.t]
   @type path :: String.t
 
+  defp get_repo_path(args) when not is_list(args), do: get_repo_path([args])
+  defp get_repo_path(args) when is_list(args) do
+    {_options, positional, _rest} = OptionParser.parse(args)
+    case positional do
+      [_url, path] -> path
+      [url] -> url |> Path.basename |> Path.rootname
+      _ -> raise "invalid arguments for clones: #{inspect(args)}"
+    end
+  end
+
   @doc """
   Clones the repository. The first argument can be `url` or `[url, path]`.
   Returns `{:ok, repository}` on success and `{:error, reason}` on failure.
@@ -10,8 +20,7 @@ defmodule Git do
   @spec clone(cli_arg) ::  {:ok, Git.Repository.t} | error
   def clone(args) do
     execute_command nil, "clone", args, fn _ ->
-      args = if is_list(args), do: args, else: [args]
-      path = (Enum.at(args, 1) || args |> Enum.at(0) |> Path.basename |> Path.rootname) |> Path.expand
+      path = args |> get_repo_path() |> Path.expand
       {:ok, %Git.Repository{path: path}}
     end
   end

@@ -8,7 +8,10 @@ defmodule GitTest do
   end
 
   test :clone, %{dir: dir} do
-    repo = Git.clone! [Path.dirname(__DIR__), Path.join(dir, "cloned_repo")]
+    repo_path = Path.join(dir, "cloned_repo")
+    repo = Git.clone! [Path.dirname(__DIR__), "--depth=1", repo_path]
+
+    assert repo.path == repo_path
 
     assert File.exists?(repo.path)
     assert File.exists?(Path.join(repo.path, ".git"))
