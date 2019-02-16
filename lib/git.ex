@@ -5,7 +5,7 @@ defmodule Git do
 
   defp get_repo_path(args) when not is_list(args), do: get_repo_path([args])
   defp get_repo_path(args) when is_list(args) do
-    {_options, positional, _rest} = OptionParser.parse(args)
+    {_options, positional, _rest} = OptionParser.parse(args, strict: [])
     case positional do
       [_url, path] -> path
       [url] -> url |> Path.basename |> Path.rootname
