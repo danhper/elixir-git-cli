@@ -31,9 +31,14 @@ defmodule Git do
   @spec clone!(cli_arg) :: Git.Repository.t
   def clone!(args), do: result_or_fail(clone(args))
 
-  @spec init(cli_arg) :: {:ok, Git.Repository.t} | error
   @spec init() :: {:ok, Git.Repository.t} | error
-  def init(args \\ []) do
+  @spec init(Git.Repository.t) :: {:ok, Git.Repository.t} | error
+  @spec init(cli_arg) :: {:ok, Git.Repository.t} | error
+  def init(), do: init([])
+  def init(repo = %Git.Repository{}) do
+    Git.execute_command repo, "init", [], (fn _ -> {:ok, repo} end)
+  end
+  def init(args) do
     execute_command nil, "init", args, fn _ ->
       args = if is_list(args), do: args, else: [args]
       path = (Enum.at(args, 0) || ".") |> Path.expand
