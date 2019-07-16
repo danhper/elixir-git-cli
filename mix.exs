@@ -3,11 +3,11 @@ defmodule Git.Mixfile do
 
   def project do
     [app: :git_cli,
-     version: "0.2.6",
+     version: "0.2.7",
      elixir: "~> 1.0",
      name: "git_cli",
-     source_url: "https://github.com/tuvistavie/elixir-git-cli",
-     homepage_url: "https://github.com/tuvistavie/elixir-git-cli",
+     source_url: "https://github.com/danhper/elixir-git-cli",
+     homepage_url: "https://github.com/danhper/elixir-git-cli",
      package: package(),
      description: description(),
      build_embedded: Mix.env == :prod,
@@ -36,7 +36,7 @@ defmodule Git.Mixfile do
       files: ["lib", "mix.exs", "README.md", "LICENSE", "git-commands.txt"],
       maintainers: ["Daniel Perez"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/tuvistavie/elixir-git-cli"}
+      links: %{"GitHub" => "https://github.com/danhper/elixir-git-cli"}
     ]
   end
 end
