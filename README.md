@@ -1,4 +1,4 @@
-# Elixir Git CLI [![Build Status](https://travis-ci.org/tuvistavie/elixir-git-cli.svg?branch=master)](https://travis-ci.org/tuvistavie/elixir-git-cli)
+# Elixir Git CLI [![Build Status](https://travis-ci.org/danhper/elixir-git-cli.svg?branch=master)](https://travis-ci.org/danhper/elixir-git-cli)
 
 Simple wrapper of git CLI for Elixir.
 
@@ -25,7 +25,7 @@ Here are a few examples.
 
 ### Git.clone Example
 ```elixir
-{:ok, repo} = Git.clone "https://github.com/tuvistavie/elixir-git-cli"
+{:ok, repo} = Git.clone "https://github.com/danhper/elixir-git-cli"
 Git.remote repo, ~w(add upstream https://git.example.com)
 Git.pull repo, ~w(--rebase upstream master)
 Git.diff repo, "HEAD~1"
