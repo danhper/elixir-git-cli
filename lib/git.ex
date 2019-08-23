@@ -100,6 +100,7 @@ defmodule Git do
       nil -> [stderr_to_stdout: true]
       _ ->   [stderr_to_stdout: true, cd: repo.path]
     end
+    args = normalize_arguments(command, args)
 
     case System.cmd "git", [command|args], options do
       {output, 0} -> callback.(output)
@@ -109,6 +110,17 @@ defmodule Git do
 
   def execute_command(repo, command, args, callback) do
     execute_command(repo, command, [args], callback)
+  end
+
+  defp normalize_arguments("shortlog", args) do
+    if Enum.all?(args, &String.starts_with?(&1, "-")) do
+      args ++ ["HEAD"]
+    else
+      args
+    end
+  end
+  defp normalize_arguments(_command, args) do
+    args
   end
 
   @spec result_or_fail({:ok, t}) :: t  when t: Git.Repository.t | String.t

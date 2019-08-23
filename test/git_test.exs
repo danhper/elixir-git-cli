@@ -45,4 +45,12 @@ defmodule GitTest do
     assert String.starts_with?(Git.status!(repo, ~w(-s)), "A")
     Temp.cleanup
   end
+
+  test :shortlog, %{dir: dir} do
+    repo_path = Path.join(dir, "cloned_repo")
+    repo = Git.clone! [Path.dirname(__DIR__), "--depth=1", repo_path]
+    assert {:ok, _log} = Git.shortlog(repo)
+    assert Git.shortlog!(repo) != Git.shortlog!(repo, ["HEAD~1"])
+    Temp.cleanup
+  end
 end
