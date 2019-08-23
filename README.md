@@ -6,9 +6,9 @@ Simple wrapper of git CLI for Elixir.
 
 Add the dependency to your `mix.exs` deps:
 
-```
+```elixir
   defp deps do
-    [{:git_cli, "~> 0.2"}]
+    [{:git_cli, "~> 0.3"}]
   end
 ```
 

@@ -3,8 +3,8 @@ defmodule Git.Mixfile do
 
   def project do
     [app: :git_cli,
-     version: "0.2.7",
-     elixir: "~> 1.0",
+     version: "0.3.0",
+     elixir: "~> 1.5",
      name: "git_cli",
      source_url: "https://github.com/danhper/elixir-git-cli",
      homepage_url: "https://github.com/danhper/elixir-git-cli",
