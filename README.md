@@ -30,7 +30,7 @@ Git.remote repo, ~w(add upstream https://git.example.com)
 Git.pull repo, ~w(--rebase upstream master)
 Git.diff repo, "HEAD~1"
 Git.add repo, "."
-Git.commit repo, ["-m" "my message"]
+Git.commit repo, ["-m", "my message"]
 Git.push repo
 IO.puts Git.log!(repo)
 ```
@@ -39,7 +39,7 @@ IO.puts Git.log!(repo)
 ```elixir
 repo = Git.new "/path/to/existing/repo"
 IO.puts Git.status! repo
-Git.commit repo, ["-m" "my message"]
+Git.commit repo, ["-m", "my message"]
 Git.push repo
 IO.puts Git.log!(repo)
 ```
